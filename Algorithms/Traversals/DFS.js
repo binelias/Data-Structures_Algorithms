@@ -169,7 +169,7 @@ class BinarySearchTree {
     
     return this.BreadthFirstSearchR(queue, list);
   }
-  DFTPreOrder(currentNode, list) {
+  DFTPreOrder() {
     return traversePreOrder(this.root, []);
   }
   DFTPostOrder(){
@@ -195,7 +195,7 @@ function traverseInOrder(node, list){
   if(node.left) {
     traverseInOrder(node.left, list);
   }
-  list.push(node.value);
+  list.push(node.value);//lowest push to the list
   if(node.right) {
     traverseInOrder(node.right, list);
   }
@@ -209,7 +209,7 @@ function traversePostOrder(node, list){
   if(node.right) {
     traversePostOrder(node.right, list);
   }
-  list.push(node.value);
+  list.push(node.value);//
   return list;
 }
 

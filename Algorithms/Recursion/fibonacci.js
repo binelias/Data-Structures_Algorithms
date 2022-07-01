@@ -16,7 +16,7 @@ function fibonacciIterative(n){//O(n)
 
 fibonacciIterative(3);//2
 
-function fibonacciRecursive(n) {//O(2^n)can be made to O(n) by dynamic programming and memorization
+function fibonacciRecursive(n) {//O(2^n)can be made to O(n) by dynamic programming and memoization
   if (n < 2){
     return n;
   }
