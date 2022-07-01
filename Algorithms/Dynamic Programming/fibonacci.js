@@ -26,19 +26,24 @@ function fibonacciMaster() { //O(n)
   }
 }
 
-//iteration
+//iteration DP bottom up approach
 function fibonacciMaster2(n) {//O(n)
   let answer = [0,1];
-  for ( let i = 2; i <= n; i++) {
-    answer.push(answer[i-2]+ answer[i-1]);
+  if(n === 0) {
+    return n;
+  } else {
+    for ( let i = 2; i <= n; i++) {
+      answer.push(answer[i-2]+ answer[i-1]);
+    }
+    return answer.pop();
   }
-  return answer.pop();
+  
 }
 
 const fasterFib = fibonacciMaster();
 
 console.log('Slow', fibonacci(10));//177 times
 console.log('DP', fasterFib(10));//19 times
-console.log('loop', fibonacciMaster2(10));//9 times
+console.log('DP2', fibonacciMaster2(10));//9 times
 console.log('we did ' + calculations + ' calculations');
 
