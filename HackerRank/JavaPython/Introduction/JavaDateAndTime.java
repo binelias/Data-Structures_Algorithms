@@ -3,7 +3,7 @@
 // Sample Output
 // WEDNESDAY
 
-package HackerRank.Java;
+package HackerRank.JavaPython.Introduction;
 import java.time.LocalDate;
 import java.io.*;
 

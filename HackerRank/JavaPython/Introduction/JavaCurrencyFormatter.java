@@ -7,7 +7,7 @@
 // China: ￥12,324.13
 // France: 12 324,13 €
 
-package HackerRank.Java;
+package HackerRank.JavaPython.Introduction;
 import java.text.NumberFormat;
 import java.util.Locale;
 import java.util.Scanner;

@@ -1,4 +1,4 @@
-package HackerRank.Java.Introduction;
+package HackerRank.JavaPython.Introduction;
 // Input
 // java 100
 // cpp 65

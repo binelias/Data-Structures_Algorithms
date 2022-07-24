@@ -5,9 +5,15 @@
 // Output: [0,1]
 
 var twoSum = function(nums, target) {
-  const exists = {};
-  for(let i = 0; i < nums.length; i++){
-      if(exists[target - nums[i]]) return [+exists[target - nums[i]], i];
-      else exists[nums[i]] = `${i}`;
+  //{numberTofind:index}
+  const numsMap = {};
+  for(let p = 0; p < nums.length; p++){
+    if(numsMap[nums[p]] >=0) {
+      return [numsMap[nums[p]],p];
+    }else {
+      const numberTofind = target - nums[p];
+      numsMap[numberTofind] =p;
+    }
   }
+  return null;
 };

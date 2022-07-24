@@ -13,7 +13,7 @@
 // 2 x 10 = 20
 
 
-package HackerRank.Java.Introduction;
+package HackerRank.JavaPython.Introduction;
 import java.io.*;
 
 

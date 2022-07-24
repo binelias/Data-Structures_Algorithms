@@ -8,7 +8,7 @@
 // 2 I am a file
 // 3 Read me until end-of-file.
 
-package HackerRank.Java.Introduction;
+package HackerRank.JavaPython.Introduction;
 import java.util.Scanner;
 
 

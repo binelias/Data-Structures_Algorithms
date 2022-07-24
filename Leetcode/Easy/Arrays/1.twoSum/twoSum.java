@@ -3,10 +3,11 @@
 // You can return the answer in any order.
 // Input: nums = [2,7,11,15], target = 9
 // Output: [0,1]
+import java.util.*;
 
 public class twoSum {
   public int[] twoSum(int[] nums, int target) {
-      Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+      HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
       for (int i = 0; i < nums.length; map.put(nums[i],i++)) 
           if (map.containsKey(target - nums[i])) 
               return new int[]{map.get(target - nums[i]),i};

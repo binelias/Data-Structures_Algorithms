@@ -21,7 +21,7 @@
 // -100000000000000 can be fitted in:
 // * long
 
-package HackerRank.Java;
+package HackerRank.JavaPython.Introduction;
 import java.util.Scanner;
 
 public class JavaDatatypes {

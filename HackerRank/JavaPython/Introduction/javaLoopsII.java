@@ -6,7 +6,7 @@
 // 2 6 14 30 62 126 254 510 1022 2046
 // 8 14 26 50 98
 
-package HackerRank.Java.Introduction;
+package HackerRank.JavaPython.Introduction;
 
 public class javaLoopsII {
   public static void main(String []argh){

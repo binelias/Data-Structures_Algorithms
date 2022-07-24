@@ -27,7 +27,7 @@
 // Samiha
 // Rumpa
 
-package HackerRank.Java.DataStructures;
+package HackerRank.JavaPython.DataStructures;
 
 import java.util.Scanner;
 import java.util.ArrayList;

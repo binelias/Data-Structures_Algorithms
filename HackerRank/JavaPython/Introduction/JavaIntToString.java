@@ -7,7 +7,7 @@
 // Sample Output 0
 // Good job
 
-package HackerRank.Java.Introduction;
+package HackerRank.JavaPython.Introduction;
 import java.util.*;
 import java.security.*;
 

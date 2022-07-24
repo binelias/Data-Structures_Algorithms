@@ -43,8 +43,23 @@
 
 
 public class FrogRiverOne {
-  public int solution(int X, int[] A){
-
-  }
-  
+  public int solution(int X, int[] A) {
+		HashSet<Integer> hash = new HashSet<>();
+		int count = 0;
+		for(int i=0; i<A.length; i++) {
+			if(!hash.contains(A[i])) {
+				hash.add(i);
+				count++;
+			}
+			if(count == X) {
+				return i;
+			}
+		}
+		return -1;
+    }
+	
+	public static void main(String[] args) {
+		FrogRiverOne jump = new FrogRiverOne();
+		System.out.print(jump.solution(5, new int[] {1,3,1,4,2,3,5,4}));
+	}
 }

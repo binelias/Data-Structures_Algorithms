@@ -12,7 +12,7 @@
 // On the first line, print String: followed by the unaltered String read from stdin.
 // On the second line, print Double: followed by the unaltered double read from stdin.
 // On the third line, print Int: followed by the unaltered integer read from stdin.
-package HackerRank.Java.Introduction;
+package HackerRank.JavaPython.Introduction;
 import java.util.Scanner;
 
 

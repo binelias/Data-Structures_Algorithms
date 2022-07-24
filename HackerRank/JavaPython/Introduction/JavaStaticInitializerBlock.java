@@ -10,7 +10,7 @@
 // Sample output 2
 // java.lang.Exception: Breadth and height must be positive
 
-package HackerRank.Java.Introduction
+package HackerRank.JavaPython.Introduction
 import java.util.Scanner;
 
 public class JavaStaticInitializerBlock {
