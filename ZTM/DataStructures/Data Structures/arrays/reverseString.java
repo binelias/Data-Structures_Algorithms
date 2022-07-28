@@ -17,7 +17,7 @@ public class ReverseString {
 
   public static String recursiveReversal (String str) {
     if (str.length() == 0)  //breakpoint for recursion
-       return "";
+      return "";
     return recursiveReversal(str.substring(1)) + str.charAt(0);
   }
 

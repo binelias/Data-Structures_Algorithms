@@ -2,9 +2,22 @@
 
 // Example
 
-// Case 1: For the input provided as follows: 7 1 5 1 4 9 0 4 Output program will be: 4 Description: Both 1 and 4 appear the maximum number of times(two times), but 4 is The greatest one out of the two, so the output is 4.
+// Case 1: For the input provided as follows: 
+// 7 1 5 1 4 9 0 4 
 
-// Case 2: For the input provide as follows: 7 1 10 0 5 2 3 9 Output of the program will be: 10 Description: All number appear only once, so you should choose the greatest one that is 10.
+// Output program will be: 
+// 4 
+
+// Description: 
+// Both 1 and 4 appear the maximum number of times(two times), but 4 is The greatest one out of the two, so the output is 4.
+
+// // Case 2: For the input provide as follows: 
+// 7 1 10 0 5 2 3 9 
+
+// Output of the program will be: 10 
+
+// Description: 
+// All number appear only once, so you should choose the greatest one that is 10.
 
 package CodeAssess.canon;
 Import java.io.*; 
