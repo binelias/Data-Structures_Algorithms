@@ -9,6 +9,7 @@
 // Return the number of minutes needed to inform all the employees about the urgent news.
 
 package Leetcode.Medium.Graphs;
+import java.util.*;
 
 public class TimeNeededInformAllEmployees {
   int max;
@@ -16,7 +17,7 @@ public class TimeNeededInformAllEmployees {
       if(n == 1)
           return 0;
       int[] time = new int[n];
-      List<List<Integer>> edge = new ArrayList<>();
+      List<Integer> edge = new ArrayList<>();
       for(int i = 0;i < n;i++)
           edge.add(new ArrayList<>());
       for(int i = 0;i < n;i++){
@@ -28,9 +29,9 @@ public class TimeNeededInformAllEmployees {
       return max;
   }
   public void dfs(List<List<Integer>> edge, int curr, int[] inform, int time){
-      int informNext = time + inform[curr];
-      max = Math.max(informNext, max);
-      for(int nei : edge.get(curr))
-          dfs(edge, nei, inform, informNext);
+    int informNext = time + inform[curr];
+    max = Math.max(informNext, max);
+    for(int nei : edge.get(curr))
+    dfs(edge, nei, inform, informNext);
   }
 }
