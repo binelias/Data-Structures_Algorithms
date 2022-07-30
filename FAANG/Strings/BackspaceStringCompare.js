@@ -68,7 +68,7 @@ let backspaceCompare = function(s, t) {
 //Step5: can we optimize our soln
 
 //Optimal soln
-//using 2 pointers from moving char left to right
+//using 2 pointers from moving char left to right technique
 let backspaceCompare2 = function(s, t) {
   let p1 = s.length-1, p2 = t.length-1;
   while(p1>=0 || p2>=0) {
