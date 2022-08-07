@@ -1,4 +1,4 @@
-package Leetcode.Easy.TopInterviewQuestions;
+package Leetcode.TopInterviewQuestions;
 import java.util.*;
 
 public class ValidParentheses {
