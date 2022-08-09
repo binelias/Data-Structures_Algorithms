@@ -197,3 +197,307 @@ DELETE FROM Person WHERE Id NOT IN
     SELECT MIN(Id) FROM Person GROUP BY Email) as p);
 
 
+-- Fix Names in a Table
+-- Input: 
+-- Users table:
+-- +---------+-------+
+-- | user_id | name  |
+-- +---------+-------+
+-- | 1       | aLice |
+-- | 2       | bOB   |
+-- +---------+-------+
+-- Output: 
+-- +---------+-------+
+-- | user_id | name  |
+-- +---------+-------+
+-- | 1       | Alice |
+-- | 2       | Bob   |
+-- +---------+-------+
+SELECT user_id, CONCAT(UPPER(SUBSTR(name,1,1)), LOWER(SUBSTR(name,2,100))) AS name 
+FROM Users
+ORDER BY user_id;
+
+
+-- Group Sold Products By The Date
+-- Input: 
+-- Activities table:
+-- +------------+------------+
+-- | sell_date  | product     |
+-- +------------+------------+
+-- | 2020-05-30 | Headphone  |
+-- | 2020-06-01 | Pencil     |
+-- | 2020-06-02 | Mask       |
+-- | 2020-05-30 | Basketball |
+-- | 2020-06-01 | Bible      |
+-- | 2020-06-02 | Mask       |
+-- | 2020-05-30 | T-Shirt    |
+-- +------------+------------+
+-- Output: 
+-- +------------+----------+------------------------------+
+-- | sell_date  | num_sold | products                     |
+-- +------------+----------+------------------------------+
+-- | 2020-05-30 | 3        | Basketball,Headphone,T-shirt |
+-- | 2020-06-01 | 2        | Bible,Pencil                 |
+-- | 2020-06-02 | 1        | Mask                         |
+-- +------------+----------+------------------------------+
+-- Explanation: 
+-- For 2020-05-30, Sold items were (Headphone, Basketball, T-shirt), we sort them lexicographically and separate them by a comma.
+-- For 2020-06-01, Sold items were (Pencil, Bible), we sort them lexicographically and separate them by a comma.
+-- For 2020-06-02, the Sold item is (Mask), we just return it.
+SELECT sell_date,
+COUNT(DISTINCT(product)) as num_sold,
+GROUP_CONCAT(DISTINCT product ORDER BY product SEPARATOR ',') as products
+FROM Activities
+GROUP BY sell_date;
+
+
+-- Patients With a Condition
+-- Input: 
+-- Patients table:
+-- +------------+--------------+--------------+
+-- | patient_id | patient_name | conditions   |
+-- +------------+--------------+--------------+
+-- | 1          | Daniel       | YFEV COUGH   |
+-- | 2          | Alice        |              |
+-- | 3          | Bob          | DIAB100 MYOP |
+-- | 4          | George       | ACNE DIAB100 |
+-- | 5          | Alain        | DIAB201      |
+-- +------------+--------------+--------------+
+-- Output: 
+-- +------------+--------------+--------------+
+-- | patient_id | patient_name | conditions   |
+-- +------------+--------------+--------------+
+-- | 3          | Bob          | DIAB100 MYOP |
+-- | 4          | George       | ACNE DIAB100 | 
+-- +------------+--------------+--------------+
+-- Explanation: Bob and George both have a condition that starts with DIAB1.
+SELECT * FROm Patients
+WHERE conditions LIKE '% DIAB1%' OR conditions LIKE 'DIAB1%';
+
+-- Employees With Missing Information
+-- Input: 
+-- Employees table:
+-- +-------------+----------+
+-- | employee_id | name     |
+-- +-------------+----------+
+-- | 2           | Crew     |
+-- | 4           | Haven    |
+-- | 5           | Kristian |
+-- +-------------+----------+
+-- Salaries table:
+-- +-------------+--------+
+-- | employee_id | salary |
+-- +-------------+--------+
+-- | 5           | 76071  |
+-- | 1           | 22517  |
+-- | 4           | 63539  |
+-- +-------------+--------+
+-- Output: 
+-- +-------------+
+-- | employee_id |
+-- +-------------+
+-- | 1           |
+-- | 2           |
+-- +-------------+
+-- Explanation: 
+-- Employees 1, 2, 4, and 5 are working at this company.
+-- The name of employee 1 is missing.
+-- The salary of employee 2 is missing.
+SELECT employee_id FROM Employees WHERE employee_id NOT IN (SELECT employee_id FROM Salaries)
+UNION
+SELECT employee_id FROM Salaries WHERE employee_id NOT IN (SELECT employee_id FROM Employees)
+ORDER BY employee_id;
+
+
+-- Rearrange Products Table
+-- Input: 
+-- Products table:
+-- +------------+--------+--------+--------+
+-- | product_id | store1 | store2 | store3 |
+-- +------------+--------+--------+--------+
+-- | 0          | 95     | 100    | 105    |
+-- | 1          | 70     | null   | 80     |
+-- +------------+--------+--------+--------+
+-- Output: 
+-- +------------+--------+-------+
+-- | product_id | store  | price |
+-- +------------+--------+-------+
+-- | 0          | store1 | 95    |
+-- | 0          | store2 | 100   |
+-- | 0          | store3 | 105   |
+-- | 1          | store1 | 70    |
+-- | 1          | store3 | 80    |
+-- +------------+--------+-------+
+-- Explanation: 
+-- Product 0 is available in all three stores with prices 95, 100, and 105 respectively.
+-- Product 1 is available in store1 with price 70 and store3 with price 80. The product is not available in store2.
+SELECT product_id, "store1" AS store, store1 AS price FROM Products WHERE store1 IS NOT NULL
+UNION ALL
+SELECT product_id, "store2" AS store, store2 AS price FROM Products WHERE store2 IS NOT NULL
+UNION ALL
+SELECT product_id, "store3" AS store, store3 AS price FROM Products WHERE store3 IS NOT NULL
+ORDER BY product_id;
+
+
+-- Second Highest Salary
+-- Example 1:
+-- Input: 
+-- Employee table:
+-- +----+--------+
+-- | id | salary |
+-- +----+--------+
+-- | 1  | 100    |
+-- | 2  | 200    |
+-- | 3  | 300    |
+-- +----+--------+
+-- Output: 
+-- +---------------------+
+-- | SecondHighestSalary |
+-- +---------------------+
+-- | 200                 |
+-- +---------------------+
+-- Example 2:
+-- Input: 
+-- Employee table:
+-- +----+--------+
+-- | id | salary |
+-- +----+--------+
+-- | 1  | 100    |
+-- +----+--------+
+-- Output: 
+-- +---------------------+
+-- | SecondHighestSalary |
+-- +---------------------+
+-- | null                |
+-- +---------------------+
+SELECT(
+SELECT DISTINCT Salary
+FROM Employee
+ORDER BY Salary 
+DESC LIMIT 1 OFFSET 1) AS SecondHighestSalary;
+
+SELECT MAX(Salary) AS SecondHighestSalary
+FROM Employee
+WHERE Salary < (SELECT MAX(Salary) FROM Employee);
+
+SELECT IFNULL(
+(SELECT DISTINCT Salary
+FROM Employee
+ORDER BY Salary DESC
+LIMIT 1 OFFSET 1),NULL) AS SecondHighestSalary;
+
+
+-- Tree Node
+-- Each node in the tree can be one of three types:
+
+-- "Leaf": if the node is a leaf node.
+-- "Root": if the node is the root of the tree.
+-- "Inner": If the node is neither a leaf node nor a root node.
+-- Write an SQL query to report the type of each node in the tree.
+
+-- Return the result table ordered by id in ascending order.
+
+-- The query result format is in the following example.
+-- Example 1:
+-- Input: 
+-- Tree table:
+-- +----+------+
+-- | id | p_id |
+-- +----+------+
+-- | 1  | null |
+-- | 2  | 1    |
+-- | 3  | 1    |
+-- | 4  | 2    |
+-- | 5  | 2    |
+-- +----+------+
+-- Output: 
+-- +----+-------+
+-- | id | type  |
+-- +----+-------+
+-- | 1  | Root  |
+-- | 2  | Inner |
+-- | 3  | Leaf  |
+-- | 4  | Leaf  |
+-- | 5  | Leaf  |
+-- +----+-------+
+-- Explanation: 
+-- Node 1 is the root node because its parent node is null and it has child nodes 2 and 3.
+-- Node 2 is an inner node because it has parent node 1 and child node 4 and 5.
+-- Nodes 3, 4, and 5 are leaf nodes because they have parent nodes and they do not have child nodes.
+
+-- Example 2:
+-- Input: 
+-- Tree table:
+-- +----+------+
+-- | id | p_id |
+-- +----+------+
+-- | 1  | null |
+-- +----+------+
+-- Output: 
+-- +----+-------+
+-- | id | type  |
+-- +----+-------+
+-- | 1  | Root  |
+-- +----+-------+
+-- Explanation: If there is only one node on the tree, you only need to output its root attributes.
+SELECT
+    id AS `Id`,
+    CASE
+        WHEN tree.id = (SELECT atree.id FROM tree atree WHERE atree.p_id IS NULL)
+          THEN 'Root'
+        WHEN tree.id IN (SELECT atree.p_id FROM tree atree)
+          THEN 'Inner'
+        ELSE 'Leaf'
+    END AS Type
+FROM
+    tree
+ORDER BY `Id`;
+
+
+SELECT
+    atree.id,
+    IF(ISNULL(atree.p_id),
+        'Root',
+        IF(atree.id IN (SELECT p_id FROM tree), 'Inner','Leaf')) Type
+FROM
+    tree atree
+ORDER BY atree.id
+
+
+SELECT
+    id, 'Root' AS Type
+FROM
+    tree
+WHERE
+    p_id IS NULL
+
+UNION
+
+SELECT
+    id, 'Leaf' AS Type
+FROM
+    tree
+WHERE
+    id NOT IN (SELECT DISTINCT
+            p_id
+        FROM
+            tree
+        WHERE
+            p_id IS NOT NULL)
+        AND p_id IS NOT NULL
+
+UNION
+
+SELECT
+    id, 'Inner' AS Type
+FROM
+    tree
+WHERE
+    id IN (SELECT DISTINCT
+            p_id
+        FROM
+            tree
+        WHERE
+            p_id IS NOT NULL)
+        AND p_id IS NOT NULL
+ORDER BY id;
