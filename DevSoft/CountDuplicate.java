@@ -16,7 +16,7 @@ public class CountDuplicate {
             } else map.put(integer, times);
         }
         for (Integer value: map.values()) {
-        	if(value == 2) ways++;
+            if(value == 2) ways++;
         }
         if(ways>0)  System.out.println(ways);
         else System.out.println("null");

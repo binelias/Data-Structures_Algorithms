@@ -16,7 +16,7 @@ public class RemoveDuplicatesArray {
   public int removeDuplicates(int[] nums) {
     int i = 1;
     for(int num: nums) {
-        if(num>nums[i-1]) nums[i++] = num;
+      if(num>nums[i-1]) nums[i++] = num;
     }
     return i;  
   }  
