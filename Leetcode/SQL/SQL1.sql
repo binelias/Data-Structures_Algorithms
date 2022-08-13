@@ -538,3 +538,79 @@ ON p.PersonId=a.PersonId;
 SELECT Person.FirstName, Person.LastName, Address.City, Address.State 
 FROM Person NATURAL 
 LEFT JOIN Address;
+
+
+-- Customer Who Visited but Did Not Make Any Transactions
+-- Input: 
+-- Visits
+-- +----------+-------------+
+-- | visit_id | customer_id |
+-- +----------+-------------+
+-- | 1        | 23          |
+-- | 2        | 9           |
+-- | 4        | 30          |
+-- | 5        | 54          |
+-- | 6        | 96          |
+-- | 7        | 54          |
+-- | 8        | 54          |
+-- +----------+-------------+
+-- Transactions
+-- +----------------+----------+--------+
+-- | transaction_id | visit_id | amount |
+-- +----------------+----------+--------+
+-- | 2              | 5        | 310    |
+-- | 3              | 5        | 300    |
+-- | 9              | 5        | 200    |
+-- | 12             | 1        | 910    |
+-- | 13             | 2        | 970    |
+-- +----------------+----------+--------+
+-- Output: 
+-- +-------------+----------------+
+-- | customer_id | count_no_trans |
+-- +-------------+----------------+
+-- | 54          | 2              |
+-- | 30          | 1              |
+-- | 96          | 1              |
+-- +-------------+----------------+
+-- Explanation: 
+-- Customer with id = 23 visited the mall once and made one transaction during the visit with id = 12.
+-- Customer with id = 9 visited the mall once and made one transaction during the visit with id = 13.
+-- Customer with id = 30 visited the mall once and did not make any transactions.
+-- Customer with id = 54 visited the mall three times. During 2 visits they did not make any transactions, and during one visit they made 3 transactions.
+-- Customer with id = 96 visited the mall once and did not make any transactions.
+-- As we can see, users with IDs 30 and 96 visited the mall one time without making any transactions. Also, user 54 visited the mall twice and did not make any transactions.
+SELECT DISTINCT(customer_id), COUNT(customer_id) AS count_no_trans
+FROM Visits WHERE visit_id NOT IN(SELECT visit_id FROM Transactions) 
+GROUP BY customer_id;
+
+
+-- Article Views I
+-- Input: 
+-- Views table:
+-- +------------+-----------+-----------+------------+
+-- | article_id | author_id | viewer_id | view_date  |
+-- +------------+-----------+-----------+------------+
+-- | 1          | 3         | 5         | 2019-08-01 |
+-- | 1          | 3         | 6         | 2019-08-02 |
+-- | 2          | 7         | 7         | 2019-08-01 |
+-- | 2          | 7         | 6         | 2019-08-02 |
+-- | 4          | 7         | 1         | 2019-07-22 |
+-- | 3          | 4         | 4         | 2019-07-21 |
+-- | 3          | 4         | 4         | 2019-07-21 |
+-- +------------+-----------+-----------+------------+
+-- Output: 
+-- +------+
+-- | id   |
+-- +------+
+-- | 4    |
+-- | 7    |
+-- +------+
+SElECT DISTINCT(author_id) AS id FROM VIEWS
+WHERE author_id = viewer_id
+ORDER BY author_id ASC
+
+SELECT author_id id 
+FROM VIEWS WHERE author_id=viewer_id 
+GROUP BY author_id 
+ORDER BY author_id ASC;
+
