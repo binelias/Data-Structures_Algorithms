@@ -614,3 +614,53 @@ FROM VIEWS WHERE author_id=viewer_id
 GROUP BY author_id 
 ORDER BY author_id ASC;
 
+
+-- Rising Temperature
+-- Input: 
+-- Weather table:
+-- +----+------------+-------------+
+-- | id | recordDate | temperature |
+-- +----+------------+-------------+
+-- | 1  | 2015-01-01 | 10          |
+-- | 2  | 2015-01-02 | 25          |
+-- | 3  | 2015-01-03 | 20          |
+-- | 4  | 2015-01-04 | 30          |
+-- +----+------------+-------------+
+-- Output: 
+-- +----+
+-- | id |
+-- +----+
+-- | 2  |
+-- | 4  |
+-- +----+
+-- Explanation: 
+-- In 2015-01-02, the temperature was higher than the previous day (10 -> 25).
+-- In 2015-01-04, the temperature was higher than the previous day (20 -> 30).
+SELECT
+    weather.id AS 'Id'
+FROM
+    weather
+        JOIN
+    weather w ON DATEDIFF(weather.recordDate, w.recordDate) = 1
+        AND weather.Temperature > w.Temperature;
+
+
+SELECT DISTINCT a.Id
+FROM Weather a,Weather b
+WHERE a.Temperature > b.Temperature
+AND DATEDIFF(a.Recorddate,b.Recorddate) = 1;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
