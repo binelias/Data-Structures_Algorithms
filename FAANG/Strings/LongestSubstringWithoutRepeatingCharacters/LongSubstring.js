@@ -44,7 +44,7 @@ const lengthOfLongestSubstring = function(s) {
 const lengthOfLongestSubstring2 = function(s) {
   //Base Case
   if(s.length <= 1) return s.length;
-  //hashmap of char and index
+  //object
   const seenChar = {};
   let left = 0, longest = 0;
 
@@ -56,6 +56,28 @@ const lengthOfLongestSubstring2 = function(s) {
         left = prevSeenChar + 1;
       }
       seenChar[currentChar] = right;
+      longest = Math.max(longest, right-left + 1);  
+  }
+  return longest;
+};//T: O(n), S: O(n);
+
+//optimal soln
+//use left and right pointer and hashmap using  key:currentchar and value:index
+const lengthOfLongestSubstring3 = function(s) {
+  //Base Case
+  if(s.length <= 1) return s.length;
+  //hashmap of char and index
+  const seenChar =  new Map();
+  let left = 0, longest = 0;
+
+  for(let right = 0; right < s.length; right++) {
+      const currentChar = s[right];
+      const prevSeenChar = seenChar.get(currentChar);
+
+      if(prevSeenChar >= left) {
+        left = prevSeenChar + 1;
+      }
+      seenChar.set(currentChar, right);
       longest = Math.max(longest, right-left + 1);  
   }
   return longest;
