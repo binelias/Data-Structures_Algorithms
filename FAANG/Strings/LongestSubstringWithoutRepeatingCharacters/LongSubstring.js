@@ -59,4 +59,4 @@ const lengthOfLongestSubstring2 = function(s) {
       longest = Math.max(longest, right-left + 1);  
   }
   return longest;
-};
+};//T: O(n), S: O(n);
