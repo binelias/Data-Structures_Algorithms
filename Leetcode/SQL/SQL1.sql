@@ -605,9 +605,9 @@ GROUP BY customer_id;
 -- | 4    |
 -- | 7    |
 -- +------+
-SElECT DISTINCT(author_id) AS id FROM VIEWS
+SELECT DISTINCT(author_id) AS id FROM VIEWS
 WHERE author_id = viewer_id
-ORDER BY author_id ASC
+ORDER BY author_id ASC;
 
 SELECT author_id id 
 FROM VIEWS WHERE author_id=viewer_id 
