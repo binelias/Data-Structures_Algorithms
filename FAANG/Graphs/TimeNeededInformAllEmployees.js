@@ -54,4 +54,4 @@ const dfs = function(currentID, adjList, informTime) {
     max = Math.max(max, dfs(subordinates[i], adjList, informTime));
   }
   return max + informTime[currentID];
-}
+}//T: O(n), S: O(n)
