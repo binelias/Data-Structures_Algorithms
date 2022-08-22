@@ -28,7 +28,8 @@
 //Directed Graph
 //Adj list
 // 0[1]
-// 1[2]
+// 1[2]  
+// 2[]
 // 3[0,4]
 // 4[]
 // 5[2,3,4]
@@ -117,4 +118,4 @@ const canFinish2 = function(numCourses, prerequisites) {
   }
   return count === n;
 }
-//T: O(P + O(n^2))
+//T: O(P + O(n^2)), S: O(n^2)

@@ -711,6 +711,172 @@ WHERE
             c.name = 'RED');
 
 
+-- User Activity for the Past 30 Days 
+-- Table: Activity
+
+-- +---------------+---------+
+-- | Column Name   | Type    |
+-- +---------------+---------+
+-- | user_id       | int     |
+-- | session_id    | int     |
+-- | activity_date | date    |
+-- | activity_type | enum    |
+-- +---------------+---------+
+-- There is no primary key for this table, it may have duplicate rows.
+-- The activity_type column is an ENUM of type ('open_session', 'end_session', 'scroll_down', 'send_message').
+-- The table shows the user activities for a social media website. 
+-- Note that each session belongs to exactly one user.
+
+-- Write an SQL query to find the daily active user count for a period of 30 days ending 2019-07-27 inclusively. A user was active on someday if they made at least one activity on that day.
+
+-- Return the result table in any order.
+
+-- The query result format is in the following example.
+
+
+-- Example 1:
+
+-- Input: 
+-- Activity table:
+-- +---------+------------+---------------+---------------+
+-- | user_id | session_id | activity_date | activity_type |
+-- +---------+------------+---------------+---------------+
+-- | 1       | 1          | 2019-07-20    | open_session  |
+-- | 1       | 1          | 2019-07-20    | scroll_down   |
+-- | 1       | 1          | 2019-07-20    | end_session   |
+-- | 2       | 4          | 2019-07-20    | open_session  |
+-- | 2       | 4          | 2019-07-21    | send_message  |
+-- | 2       | 4          | 2019-07-21    | end_session   |
+-- | 3       | 2          | 2019-07-21    | open_session  |
+-- | 3       | 2          | 2019-07-21    | send_message  |
+-- | 3       | 2          | 2019-07-21    | end_session   |
+-- | 4       | 3          | 2019-06-25    | open_session  |
+-- | 4       | 3          | 2019-06-25    | end_session   |
+-- +---------+------------+---------------+---------------+
+-- Output: 
+-- +------------+--------------+ 
+-- | day        | active_users |
+-- +------------+--------------+ 
+-- | 2019-07-20 | 2            |
+-- | 2019-07-21 | 2            |
+-- +------------+--------------+ 
+-- Explanation: Note that we do not care about days with zero active users.
+SELECT activity_date AS day, 
+COUNT( DISTINCT user_id ) AS active_users FROM Activity
+WHERE DATEDIFF('2019-07-27', activity_date) BETWEEN 0 AND 29
+GROUP BY day;
+
+
+-- Daily Leads and Partners
+-- Table: DailySales
+
+-- +-------------+---------+
+-- | Column Name | Type    |
+-- +-------------+---------+
+-- | date_id     | date    |
+-- | make_name   | varchar |
+-- | lead_id     | int     |
+-- | partner_id  | int     |
+-- +-------------+---------+
+-- This table does not have a primary key.
+-- This table contains the date and the name of the product sold and the IDs of the lead and partner it was sold to.
+-- The name consists of only lowercase English letters.
+
+-- Write an SQL query that will, for each date_id and make_name, return the number of distinct lead_id's and distinct partner_id's.
+
+-- Return the result table in any order.
+
+-- The query result format is in the following example.
+
+-- Example 1:
+
+-- Input: 
+-- DailySales table:
+-- +-----------+-----------+---------+------------+
+-- | date_id   | make_name | lead_id | partner_id |
+-- +-----------+-----------+---------+------------+
+-- | 2020-12-8 | toyota    | 0       | 1          |
+-- | 2020-12-8 | toyota    | 1       | 0          |
+-- | 2020-12-8 | toyota    | 1       | 2          |
+-- | 2020-12-7 | toyota    | 0       | 2          |
+-- | 2020-12-7 | toyota    | 0       | 1          |
+-- | 2020-12-8 | honda     | 1       | 2          |
+-- | 2020-12-8 | honda     | 2       | 1          |
+-- | 2020-12-7 | honda     | 0       | 1          |
+-- | 2020-12-7 | honda     | 1       | 2          |
+-- | 2020-12-7 | honda     | 2       | 1          |
+-- +-----------+-----------+---------+------------+
+-- Output: 
+-- +-----------+-----------+--------------+-----------------+
+-- | date_id   | make_name | unique_leads | unique_partners |
+-- +-----------+-----------+--------------+-----------------+
+-- | 2020-12-8 | toyota    | 2            | 3               |
+-- | 2020-12-7 | toyota    | 1            | 2               |
+-- | 2020-12-8 | honda     | 2            | 2               |
+-- | 2020-12-7 | honda     | 3            | 2               |
+-- +-----------+-----------+--------------+-----------------+
+-- Explanation: 
+-- For 2020-12-8, toyota gets leads = [0, 1] and partners = [0, 1, 2] while honda gets leads = [1, 2] and partners = [1, 2].
+-- For 2020-12-7, toyota gets leads = [0] and partners = [1, 2] while honda gets leads = [0, 1, 2] and partners = [1, 2].
+
+SELECT
+    date_id,
+    make_name,
+    COUNT(DISTINCT lead_id) AS unique_leads,
+    COUNT(DISTINCT partner_id) AS unique_partners
+FROM DailySales
+GROUP BY date_id, make_name;
+
+
+-- Find Followers Count
+-- Table: Followers
+
+-- +-------------+------+
+-- | Column Name | Type |
+-- +-------------+------+
+-- | user_id     | int  |
+-- | follower_id | int  |
+-- +-------------+------+
+-- (user_id, follower_id) is the primary key for this table.
+-- This table contains the IDs of a user and a follower in a social media app where the follower follows the user.
+
+-- Write an SQL query that will, for each user, return the number of followers.
+
+-- Return the result table ordered by user_id.
+
+-- The query result format is in the following example.
+
+
+-- Example 1:
+
+-- Input: 
+-- Followers table:
+-- +---------+-------------+
+-- | user_id | follower_id |
+-- +---------+-------------+
+-- | 0       | 1           |
+-- | 1       | 0           |
+-- | 2       | 0           |
+-- | 2       | 1           |
+-- +---------+-------------+
+-- Output: 
+-- +---------+----------------+
+-- | user_id | followers_count|
+-- +---------+----------------+
+-- | 0       | 1              |
+-- | 1       | 1              |
+-- | 2       | 2              |
+-- +---------+----------------+
+-- Explanation: 
+-- The followers of 0 are {1}
+-- The followers of 1 are {0}
+-- The followers of 2 are {0,1}
+SELECT DISTINCT(user_id), COUNT(follower_id) AS followers_count
+FROM followers
+GROUP BY user_id
+ORDER BY user_id;
+
+
 
 
 
