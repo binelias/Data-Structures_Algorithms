@@ -70,7 +70,7 @@ class Trie {
       return this.startsWith(prefix.substring(1), node.keys[prefix[0]]);
     }
   }
-};
+};//S: O(n) O(L),T: O(L)
 
 const trie = new Trie();
 

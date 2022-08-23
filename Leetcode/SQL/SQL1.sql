@@ -877,7 +877,168 @@ GROUP BY user_id
 ORDER BY user_id;
 
 
+-- Customer Placing the Largest Number of Orders
+-- Table: Orders
 
+-- +-----------------+----------+
+-- | Column Name     | Type     |
+-- +-----------------+----------+
+-- | order_number    | int      |
+-- | customer_number | int      |
+-- +-----------------+----------+
+-- order_number is the primary key for this table.
+-- This table contains information about the order ID and the customer ID.
+
+
+-- Write an SQL query to find the customer_number for the customer who has placed the largest number of orders.
+
+-- The test cases are generated so that exactly one customer will have placed more orders than any other customer.
+
+-- The query result format is in the following example.
+
+
+-- Example 1:
+
+-- Input: 
+-- Orders table:
+-- +--------------+-----------------+
+-- | order_number | customer_number |
+-- +--------------+-----------------+
+-- | 1            | 1               |
+-- | 2            | 2               |
+-- | 3            | 3               |
+-- | 4            | 3               |
+-- +--------------+-----------------+
+-- Output: 
+-- +-----------------+
+-- | customer_number |
+-- +-----------------+
+-- | 3               |
+-- +-----------------+
+-- Explanation: 
+-- The customer with number 3 has two orders, which is greater than either customer 1 or 2 because each of them only has one order. 
+-- So the result is customer_number 3.
+
+
+-- Follow up: What if more than one customer has the largest number of orders, can you find all the customer_number in this case?
+SELECT
+    customer_number
+FROM
+    Orders
+GROUP BY customer_number
+ORDER BY COUNT(*) DESC
+LIMIT 1;
+
+
+-- Game Play Analysis I
+-- Table: Activity
+
+-- +--------------+---------+
+-- | Column Name  | Type    |
+-- +--------------+---------+
+-- | player_id    | int     |
+-- | device_id    | int     |
+-- | event_date   | date    |
+-- | games_played | int     |
+-- +--------------+---------+
+-- (player_id, event_date) is the primary key of this table.
+-- This table shows the activity of players of some games.
+-- Each row is a record of a player who logged in and played a number of games (possibly 0) before logging out on someday using some device.
+
+-- Write an SQL query to report the first login date for each player.
+
+-- Return the result table in any order.
+
+-- The query result format is in the following example.
+
+
+-- Example 1:
+-- Input: 
+-- Activity table:
+-- +-----------+-----------+------------+--------------+
+-- | player_id | device_id | event_date | games_played |
+-- +-----------+-----------+------------+--------------+
+-- | 1         | 2         | 2016-03-01 | 5            |
+-- | 1         | 2         | 2016-05-02 | 6            |
+-- | 2         | 3         | 2017-06-25 | 1            |
+-- | 3         | 1         | 2016-03-02 | 0            |
+-- | 3         | 4         | 2018-07-03 | 5            |
+-- +-----------+-----------+------------+--------------+
+-- Output: 
+-- +-----------+-------------+
+-- | player_id | first_login |
+-- +-----------+-------------+
+-- | 1         | 2016-03-01  |
+-- | 2         | 2017-06-25  |
+-- | 3         | 2016-03-02  |
+-- +-----------+-------------+
+SELECT player_id, MIN(event_date) AS first_login
+FROM Activity
+GROUP BY player_id;
+
+
+-- The Latest Login in 2020
+-- Table: Logins
+
+-- +----------------+----------+
+-- | Column Name    | Type     |
+-- +----------------+----------+
+-- | user_id        | int      |
+-- | time_stamp     | datetime |
+-- +----------------+----------+
+-- (user_id, time_stamp) is the primary key for this table.
+-- Each row contains information about the login time for the user with ID user_id.
+
+
+-- Write an SQL query to report the latest login for all users in the year 2020. Do not include the users who did not login in 2020.
+
+-- Return the result table in any order.
+
+-- The query result format is in the following example.
+
+
+-- Example 1:
+-- Input: 
+-- Logins table:
+-- +---------+---------------------+
+-- | user_id | time_stamp          |
+-- +---------+---------------------+
+-- | 6       | 2020-06-30 15:06:07 |
+-- | 6       | 2021-04-21 14:06:06 |
+-- | 6       | 2019-03-07 00:18:15 |
+-- | 8       | 2020-02-01 05:10:53 |
+-- | 8       | 2020-12-30 00:46:50 |
+-- | 2       | 2020-01-16 02:49:50 |
+-- | 2       | 2019-08-25 07:59:08 |
+-- | 14      | 2019-07-14 09:00:00 |
+-- | 14      | 2021-01-06 11:59:59 |
+-- +---------+---------------------+
+-- Output: 
+-- +---------+---------------------+
+-- | user_id | last_stamp          |
+-- +---------+---------------------+
+-- | 6       | 2020-06-30 15:06:07 |
+-- | 8       | 2020-12-30 00:46:50 |
+-- | 2       | 2020-01-16 02:49:50 |
+-- +---------+---------------------+
+-- Explanation: 
+-- User 6 logged into their account 3 times but only once in 2020, so we include this login in the result table.
+-- User 8 logged into their account 2 times in 2020, once in February and once in December. We include only the latest one (December) in the result table.
+-- User 2 logged into their account 2 times but only once in 2020, so we include this login in the result table.
+-- User 14 did not login in 2020, so we do not include them in the result table.
+SELECT user_id, MAX(time_stamp) 'last_stamp'
+FROM logins
+WHERE time_stamp LIKE '2020%'
+GROUP BY user_id;
+
+SELECT user_id, MAX(time_stamp) AS last_stamp 
+FROM Logins WHERE YEAR(time_stamp) = 2020 GROUP BY user_id
+
+
+-- 
+SELECT event_day AS day, emp_id, SUM(out_time-in_time) AS total_time
+FROM Employees
+GROUP BY event_day, emp_id;
 
 
 
