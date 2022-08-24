@@ -34,6 +34,4 @@ public class LowestCommonAncestorBinarySearchTree {
         else if(root.val < small) root = root.right;// p, q belong to the right subtree
         else return root;// Now, small <= root.val <= large -> This root is the LCA between p and q
     }
-    return null;
-  }
-}
+    return null;//T: O(H), S: O(1)
