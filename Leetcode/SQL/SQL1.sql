@@ -1283,5 +1283,259 @@ AND YEAR(order_date) = '2019'
 GROUP BY u.user_id;
 
 
+-- Day 10 Where
+-- Duplicate Emails
+-- Table: Person
+
+-- +-------------+---------+
+-- | Column Name | Type    |
+-- +-------------+---------+
+-- | id          | int     |
+-- | email       | varchar |
+-- +-------------+---------+
+-- id is the primary key column for this table.
+-- Each row of this table contains an email. The emails will not contain uppercase letters.
+
+-- Write an SQL query to report all the duplicate emails.
+
+-- Return the result table in any order.
+
+-- The query result format is in the following example.
+
+
+-- Example 1:
+-- Input: 
+-- Person table:
+-- +----+---------+
+-- | id | email   |
+-- +----+---------+
+-- | 1  | a@b.com |
+-- | 2  | c@d.com |
+-- | 3  | a@b.com |
+-- +----+---------+
+-- Output: 
+-- +---------+
+-- | Email   |
+-- +---------+
+-- | a@b.com |
+-- +---------+
+-- Explanation: a@b.com is repeated two times.
+
+-- Using GROUP BY and HAVING condition
+SELECT Email
+FROM Person
+GROUP BY Email
+HAVING COUNT(Email) > 1;
+
+-- Using GROUP BY and a temporary table 
+SELECT Email FROM
+(
+    SELECT Email, COUNT(Email) AS num
+    FROM Person
+    GROUP BY Email
+) AS statistic
+WHERE num > 1;
+
+
+
+-- Actors and Directors Who Cooperated At Least Three Times
+-- Table: ActorDirector
+
+-- +-------------+---------+
+-- | Column Name | Type    |
+-- +-------------+---------+
+-- | actor_id    | int     |
+-- | director_id | int     |
+-- | timestamp   | int     |
+-- +-------------+---------+
+-- timestamp is the primary key column for this table.
+
+-- Write a SQL query for a report that provides the pairs (actor_id, director_id) where the actor has cooperated with the director at least three times.
+
+-- Return the result table in any order.
+
+-- The query result format is in the following example.
+
+
+-- Example 1:
+-- Input: 
+-- ActorDirector table:
+-- +-------------+-------------+-------------+
+-- | actor_id    | director_id | timestamp   |
+-- +-------------+-------------+-------------+
+-- | 1           | 1           | 0           |
+-- | 1           | 1           | 1           |
+-- | 1           | 1           | 2           |
+-- | 1           | 2           | 3           |
+-- | 1           | 2           | 4           |
+-- | 2           | 1           | 5           |
+-- | 2           | 1           | 6           |
+-- +-------------+-------------+-------------+
+-- Output: 
+-- +-------------+-------------+
+-- | actor_id    | director_id |
+-- +-------------+-------------+
+-- | 1           | 1           |
+-- +-------------+-------------+
+-- Explanation: The only pair is (1, 1) where they cooperated exactly 3 times.
+SELECT actor_id, director_id
+FROM ActorDirector
+GROUP BY actor_id, director_id
+HAVING COUNT(timestamp) >= 3;
+
+
+-- Bank Account Summary II
+-- Table: Users
+-- +--------------+---------+
+-- | Column Name  | Type    |
+-- +--------------+---------+
+-- | account      | int     |
+-- | name         | varchar |
+-- +--------------+---------+
+-- account is the primary key for this table.
+-- Each row of this table contains the account number of each user in the bank.
+-- There will be no two users having the same name in the table.
+
+-- Table: Transactions
+-- +---------------+---------+
+-- | Column Name   | Type    |
+-- +---------------+---------+
+-- | trans_id      | int     |
+-- | account       | int     |
+-- | amount        | int     |
+-- | transacted_on | date    |
+-- +---------------+---------+
+-- trans_id is the primary key for this table.
+-- Each row of this table contains all changes made to all accounts.
+-- amount is positive if the user received money and negative if they transferred money.
+-- All accounts start with a balance of 0.
+
+-- Write an SQL query to report the name and balance of users with a balance higher than 10000. The balance of an account is equal to the sum of the amounts of all transactions involving that account.
+
+-- Return the result table in any order.
+
+-- The query result format is in the following example.
+
+
+-- Example 1:
+-- Input: 
+-- Users table:
+-- +------------+--------------+
+-- | account    | name         |
+-- +------------+--------------+
+-- | 900001     | Alice        |
+-- | 900002     | Bob          |
+-- | 900003     | Charlie      |
+-- +------------+--------------+
+-- Transactions table:
+-- +------------+------------+------------+---------------+
+-- | trans_id   | account    | amount     | transacted_on |
+-- +------------+------------+------------+---------------+
+-- | 1          | 900001     | 7000       |  2020-08-01   |
+-- | 2          | 900001     | 7000       |  2020-09-01   |
+-- | 3          | 900001     | -3000      |  2020-09-02   |
+-- | 4          | 900002     | 1000       |  2020-09-12   |
+-- | 5          | 900003     | 6000       |  2020-08-07   |
+-- | 6          | 900003     | 6000       |  2020-09-07   |
+-- | 7          | 900003     | -4000      |  2020-09-11   |
+-- +------------+------------+------------+---------------+
+-- Output: 
+-- +------------+------------+
+-- | name       | balance    |
+-- +------------+------------+
+-- | Alice      | 11000      |
+-- +------------+------------+
+-- Explanation: 
+-- Alice's balance is (7000 + 7000 - 3000) = 11000.
+-- Bob's balance is 1000.
+-- Charlie's balance is (6000 + 6000 - 4000) = 8000.
+SELECT u.name, SUM(t.amount) AS balance FROM Users AS u
+INNER JOIN Transactions AS t ON u.account = t.account
+GROUP BY u.account
+HAVING balance > 10000;
+
+
+
+-- Sales Analysis III
+-- Table: Product
+-- +--------------+---------+
+-- | Column Name  | Type    |
+-- +--------------+---------+
+-- | product_id   | int     |
+-- | product_name | varchar |
+-- | unit_price   | int     |
+-- +--------------+---------+
+-- product_id is the primary key of this table.
+-- Each row of this table indicates the name and the price of each product.
+-- Table: Sales
+-- +-------------+---------+
+-- | Column Name | Type    |
+-- +-------------+---------+
+-- | seller_id   | int     |
+-- | product_id  | int     |
+-- | buyer_id    | int     |
+-- | sale_date   | date    |
+-- | quantity    | int     |
+-- | price       | int     |
+-- +-------------+---------+
+-- This table has no primary key, it can have repeated rows.
+-- product_id is a foreign key to the Product table.
+-- Each row of this table contains some information about one sale.
+
+-- Write an SQL query that reports the products that were only sold in the first quarter of 2019. That is, between 2019-01-01 and 2019-03-31 inclusive.
+
+-- Return the result table in any order.
+
+-- The query result format is in the following example.
+
+
+-- Example 1:
+-- Input: 
+-- Product table:
+-- +------------+--------------+------------+
+-- | product_id | product_name | unit_price |
+-- +------------+--------------+------------+
+-- | 1          | S8           | 1000       |
+-- | 2          | G4           | 800        |
+-- | 3          | iPhone       | 1400       |
+-- +------------+--------------+------------+
+-- Sales table:
+-- +-----------+------------+----------+------------+----------+-------+
+-- | seller_id | product_id | buyer_id | sale_date  | quantity | price |
+-- +-----------+------------+----------+------------+----------+-------+
+-- | 1         | 1          | 1        | 2019-01-21 | 2        | 2000  |
+-- | 1         | 2          | 2        | 2019-02-17 | 1        | 800   |
+-- | 2         | 2          | 3        | 2019-06-02 | 1        | 800   |
+-- | 3         | 3          | 4        | 2019-05-13 | 2        | 2800  |
+-- +-----------+------------+----------+------------+----------+-------+
+-- Output: 
+-- +-------------+--------------+
+-- | product_id  | product_name |
+-- +-------------+--------------+
+-- | 1           | S8           |
+-- +-------------+--------------+
+-- Explanation: 
+-- The product with id 1 was only sold in the spring of 2019.
+-- The product with id 2 was sold in the spring of 2019 but was also sold after the spring of 2019.
+-- The product with id 3 was sold after spring 2019.
+-- We return only product 1 as it is the product that was only sold in the spring of 2019.
+SELECT s.product_id, p.product_name 
+FROM Product p, Sales s
+WHERE s.product_id = p.product_id
+GROUP BY s.product_id, p.product_name
+HAVING MIN(s.sale_date) >= '2019-01-01' 
+    AND MAX(s.sale_date) <= '2019-03-31';
+
+SELECT product_id, product_name 
+FROM Product 
+WHERE product_id IN
+(SELECT product_id
+FROM Sales
+GROUP BY product_id
+HAVING MIN(sale_date) >= '2019-01-01' AND MAX(sale_date) <= '2019-03-31');
+
+
+
+
 
 
