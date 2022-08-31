@@ -4,7 +4,6 @@ package Avaloq;
 
 public class sameDirection {
   static int lowestArrowDirection(String S){
-    int stringLength = S.length();
     char up = '^';
     char down = 'v';
     char left = '<';
@@ -15,8 +14,7 @@ public class sameDirection {
     int downCount = 0;
     int leftCount = 0;
     int rightCount = 0;
-    for(int i = 0; i<stringLength;i++)
-    {
+    for(int i = 0; i < S.length(); i++){
       int index = i;
       // Get the specific character
       char ch = S.charAt(index);
