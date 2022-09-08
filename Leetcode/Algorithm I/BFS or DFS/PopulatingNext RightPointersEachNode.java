@@ -10,7 +10,6 @@
 
 // Initially, all next pointers are set to NULL.
 
-
 // Example 1:
 // Input: root = [1,2,3,4,5,6,7]
 // Output: [1,#,2,3,#,4,5,6,7,#]
@@ -19,7 +18,6 @@
 // Example 2:
 // Input: root = []
 // Output: []
-
 
 /*
 // Definition for a Node.
@@ -46,25 +44,29 @@ class Node {
 
 //BFS
 class Solution {
-  public Node connect(Node root) {
-      //Corner Case
-      if (root == null) return root;
-      
-      Queue<Node> curr = new LinkedList<>();
-      Queue<Node> next = new LinkedList<>();
-      curr.add(root);
-      while(!curr.isEmpty()) {
-          Node node = curr.poll();
-          if(node != null && node.left != null) next.add(node.left);
-          if(node != null && node.right != null) next.add(node.right);
-          if(curr.isEmpty()) {
-              if(node != null) node.next = null;
-              curr = next;
-              next = new LinkedList<Node>();
-          }else {
-              node.next = curr.peek();
-          }   
-      }
-      return root;
-  }
+    public Node connect(Node root) {
+        // Corner Case
+        if (root == null)
+            return root;
+
+        Queue<Node> curr = new LinkedList<>();
+        Queue<Node> next = new LinkedList<>();
+        curr.add(root);
+        while (!curr.isEmpty()) {
+            Node node = curr.poll();
+            if (node != null && node.left != null)
+                next.add(node.left);
+            if (node != null && node.right != null)
+                next.add(node.right);
+            if (curr.isEmpty()) {
+                if (node != null)
+                    node.next = null;
+                curr = next;
+                next = new LinkedList<Node>();
+            } else {
+                node.next = curr.peek();
+            }
+        }
+        return root;
+    }
 }
