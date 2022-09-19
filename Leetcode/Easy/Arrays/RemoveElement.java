@@ -24,8 +24,6 @@
 // }
 // If all assertions pass, then your solution will be accepted.
 
- 
-
 // Example 1:
 
 // Input: nums = [3,2,2,3], val = 3
@@ -40,22 +38,23 @@
 // Note that the five elements can be returned in any order.
 // It does not matter what you leave beyond the returned k (hence they are underscores).
 class Solution {
-  //two pointers
-  public int removeElement(int[] nums, int val) {
-      //edge cases 
-      if(nums.length == 0) {
-          return nums.length;
-      }
-      
-      int count = 0;
-      int left = 0;
-      for(int right = 0; right < nums.length; right++) {
-          if(nums[right] == val) count++;
-          else {
-              nums[left] = nums[right];
-              left++;
-          }
-      }
-      return nums.length - count;
-  }//T:O(n), S:O(1)
+    // two pointers
+    public int removeElement(int[] nums, int val) {
+        // edge cases
+        if (nums.length == 0) {
+            return nums.length;
+        }
+
+        int count = 0;
+        int left = 0;
+        for (int right = 0; right < nums.length; right++) {
+            if (nums[right] == val)
+                count++;
+            else {
+                nums[left] = nums[right];
+                left++;
+            }
+        }
+        return nums.length - count;
+    }// T:O(n), S:O(1)
 }
