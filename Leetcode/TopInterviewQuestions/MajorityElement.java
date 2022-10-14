@@ -34,4 +34,25 @@ class Solution {
     }
     return major;
   }// T:O(n), S:O(1)
+
+  // using Hashmap
+  public int majorityElement(int[] nums) {
+    // corner case
+    if (nums.length == 1)
+      return nums[0];
+
+    Map<Integer, Integer> map = new HashMap<>();
+
+    for (int i = 0; i < nums.length; i++) {
+      if (map.containsKey(nums[i])) {
+        int count = map.get(nums[i]) + 1;
+        if (count > nums.length / 2)
+          return nums[i];
+        else
+          map.put(nums[i], count);
+      } else
+        map.put(nums[i], 1);
+    }
+    return 0;
+  }
 }
