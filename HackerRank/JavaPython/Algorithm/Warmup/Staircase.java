@@ -34,6 +34,20 @@ class Result {
 
   public static void staircase(int n) {
     // Write your code here
+    for (int spaces = n - 1; spaces >= 0; spaces--) {
+      for (int i = spaces; i < n; i++) {
+        System.out.print("#");
+      }
+      for (int i = 0; i < spaces; i++) {
+        System.out.print(" ");
+      }
+
+      System.out.println();
+    }
+  }
+
+  public static void staircase(int n) {
+    // Write your code here
     int len = n - 1;
 
     for (int i = 0; i < n; i++) {
@@ -47,7 +61,6 @@ class Result {
       len--;
       System.out.println();
     }
-
   }
 
 }
