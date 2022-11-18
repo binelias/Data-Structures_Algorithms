@@ -3,7 +3,7 @@
 // The first line contains two space-separated integers,  and , the number of clouds and the jump distance.
 // The second line contains  space-separated integers  where . Each cloud is described as follows:
 
-// If 0, then cloud  is a cumulus cloud so 2 steps.
+// If 0, then cloud  is a cumulus cloud so 3 steps.
 // If 1, then cloud  is a thunderhead o 1 steps.
 
 // Sample Input
