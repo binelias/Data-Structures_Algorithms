@@ -36,7 +36,7 @@ class Result {
       }
       for(int i=0; i<points.size()-2;i++) {
         if(points.size()%2 == 0) {
-           if(points.get(i+1) - points.get(0) <= threshold) count++;
+          if(points.get(i+1) - points.get(0) <= threshold) count++;
         }else {
           if(i%2 == 0) {
             int soln = points.get(i+2) - points.get(0);
