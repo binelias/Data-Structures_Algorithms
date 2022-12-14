@@ -34,7 +34,8 @@ class Result {
       for(Integer value: map.values()) {
         if(value < threshold) ways++;
       }
-      for(int i=0; i<points.size()-2;i++) {
+
+      for(int i=0; i<points.size()-1;i++) {
         if(points.size()%2 == 0) {
           if(points.get(i+1) - points.get(0) <= threshold) count++;
         }else {
@@ -48,7 +49,7 @@ class Result {
         }
         
       }
-      return ways == points.size() ? ways : count;
+      return ways == points.size() ? ways : count + 1;
     }
 
 }
@@ -82,4 +83,8 @@ public class Solution {
         bufferedWriter.close();
     }
 }
+
+// As the input array is sorted and it is mandate to choose the first element i=0, we can use binary search between [1, arr.length-1] to find the element where it crosses the threshold. After finding the point we can calculate how many min number of steps that can be taken to reach the threshold point. If the threshold point cannot be found then return size of array.
+
+// Example : [1,2,3,4,5], select 1 as it is mandate (given i=0, should be selected). Binary search for target i.e arr[mid]>= threshold + arr[0], if found try searching for a smaller value within the range. We've found that arr[4] = (arr[0] + threshold) i.e. value of 5, now we have to calculate how many min number steps are be taken to reach i=4, from i =0, given we can take 1 or 2 steps [(i+1) or (i+2)] index. So by the example min steps would be 1 as we can reach the values using these steps. 1 -> 3 -> 5 i.e.(indices of [0 -> 2 ->4 ]), the answer will be the (number of steps taken + 2) = 3, as we had i=0 and i=(threshold value point) selected already.
 
