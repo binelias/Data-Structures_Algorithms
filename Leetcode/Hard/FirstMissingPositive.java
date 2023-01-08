@@ -18,7 +18,7 @@
 // Output: 1
 // Explanation: The smallest positive integer 1 is missing.
 
-package Leetcode.Hard.Arrays;
+package Leetcode.Hard;
 import java.util.*;
 
 public class FirstMissingPositive {
